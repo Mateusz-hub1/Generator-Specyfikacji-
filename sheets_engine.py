@@ -259,7 +259,10 @@ def insert_logo(service, drive_service, target_folder_id, spreadsheet_id, sheet_
     }
     media = MediaFileUpload(LOGO_PATH, mimetype='image/png')
     uploaded = drive_service.files().create(
-        body=file_metadata, media_body=media, fields='id'
+        body=file_metadata, 
+        media_body=media, 
+        fields='id',
+        supportsAllDrives=True  # <--- I TU TEŻ
     ).execute()
     logo_id = uploaded.get('id')
 
@@ -299,11 +302,12 @@ def generate_spreadsheet(
 
     if progress_cb: progress_cb(0.1)
 
-    file_obj = drive.files().create(
+file_obj = drive.files().create(
         body={"name": nazwa_pliku,
               "mimeType": "application/vnd.google-apps.spreadsheet",
               "parents": [target_folder_id]},
         fields="id,webViewLink",
+        supportsAllDrives=True  
     ).execute()
     sid = file_obj["id"]
     url = file_obj["webViewLink"]
