@@ -302,7 +302,7 @@ def generate_spreadsheet(
 
     if progress_cb: progress_cb(0.1)
 
-file_obj = drive.files().create(
+    file_obj = drive.files().create(
         body={"name": nazwa_pliku,
               "mimeType": "application/vnd.google-apps.spreadsheet",
               "parents": [target_folder_id]},
